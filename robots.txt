@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Don't index the form thank-you page
+Disallow: /thank-you.html
+
+# Sitemap location
+Sitemap: https://www.khaistudio.ca/sitemap.xml

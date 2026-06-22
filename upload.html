@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gallery Upload – Khai Studio</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f5f3ef;
+      color: #1a1a1a;
+      min-height: 100vh;
+      padding: 40px 20px;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+    }
+    .wrap { width: 100%; max-width: 720px; }
+
+    h1 { font-size: 22px; font-weight: 700; margin-bottom: 4px; }
+    .subtitle { font-size: 13px; color: #999; margin-bottom: 32px; }
+
+    /* STEP CARDS */
+    .step {
+      background: #fff;
+      border: 1px solid #e8e4de;
+      border-radius: 8px;
+      padding: 24px 28px;
+      margin-bottom: 16px;
+      opacity: 0.4;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+    .step.active   { opacity: 1; pointer-events: all; }
+    .step.done     { opacity: 1; pointer-events: none; border-color: #8bb8c1; }
+    .step-head     { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+    .step-num {
+      width: 28px; height: 28px; border-radius: 50%;
+      background: #e8e4de; color: #888;
+      font-size: 13px; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .step.active .step-num { background: #8bb8c1; color: #fff; }
+    .step.done   .step-num { background: #1BA6A6; color: #fff; }
+    .step-title { font-size: 15px; font-weight: 600; }
+    .step-desc  { font-size: 13px; color: #888; margin-left: 40px; margin-top: -8px; margin-bottom: 16px; }
+
+    /* BUTTONS */
+    .btn {
+      display: inline-block;
+      padding: 11px 26px;
+      font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase;
+      border: none; border-radius: 4px; cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+      font-family: inherit;
+    }
+    .btn-primary { background: #151515; color: #fff; }
+    .btn-primary:hover { background: #8bb8c1; }
+    .btn-accent  { background: #8bb8c1; color: #fff; }
+    .btn-accent:hover  { background: #1BA6A6; }
+    .btn-ghost   { background: none; border: 1px solid #ccc; color: #888; }
+    .btn-ghost:hover   { border-color: #c0392b; color: #c0392b; }
+    .btn:disabled { background: #ccc; cursor: not-allowed; }
+
+    /* DROP ZONE */
+    .dropzone {
+      border: 2px dashed #8bb8c1; border-radius: 8px;
+      padding: 48px 24px; text-align: center; cursor: pointer;
+      position: relative; transition: background 0.2s;
+      background: #fafaf8;
+    }
+    .dropzone.drag-over { background: rgba(139,184,193,0.1); border-color: #1BA6A6; }
+    .dropzone input {
+      position: absolute; inset: 0; opacity: 0;
+      cursor: pointer; width: 100%; height: 100%;
+    }
+    .dz-icon { font-size: 32px; margin-bottom: 10px; }
+    .dz-title { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
+    .dz-sub   { font-size: 12px; color: #aaa; }
+
+    /* PREVIEW GRID */
+    .preview-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      gap: 10px; margin-top: 16px;
+    }
+    .pv-item {
+      position: relative; aspect-ratio: 1;
+      border-radius: 6px; overflow: hidden; background: #e8e4de;
+    }
+    .pv-item img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .pv-label {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      background: rgba(0,0,0,0.6); color: #fff;
+      font-size: 9px; padding: 3px 5px;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .pv-rm {
+      position: absolute; top: 4px; right: 4px;
+      width: 20px; height: 20px; border-radius: 50%;
+      background: rgba(0,0,0,0.5); color: #fff;
+      border: none; cursor: pointer; font-size: 12px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .pv-rm:hover { background: #c0392b; }
+
+    /* PROGRESS */
+    .progress { margin-top: 16px; display: none; }
+    .progress-bar { height: 5px; background: #e8e4de; border-radius: 3px; overflow: hidden; }
+    .progress-fill { height: 100%; width: 0; background: #8bb8c1; transition: width 0.25s; }
+    .progress-txt  { font-size: 12px; color: #888; margin-top: 6px; }
+
+    /* RESULT */
+    .result { margin-top: 16px; padding: 14px 18px; border-radius: 6px; display: none; font-size: 13px; line-height: 1.6; }
+    .result.ok  { background: #e6f7f2; border-left: 4px solid #1BA6A6; color: #0a4a3a; }
+    .result.err { background: #fdeaea; border-left: 4px solid #c0392b; color: #6b1a1a; }
+    .result strong { font-weight: 700; }
+    code { background: rgba(0,0,0,0.07); padding: 1px 5px; border-radius: 3px; font-family: monospace; font-size: 11px; }
+
+    /* SAVED LIST */
+    .saved-list { list-style: none; margin-top: 8px; }
+    .saved-list li { font-size: 12px; color: #1BA6A6; padding: 2px 0; }
+    .saved-list li::before { content: "✓ "; font-weight: 700; }
+
+    /* FOLDER PATH DISPLAY */
+    .folder-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: #eaf7f3; border: 1px solid #8bb8c1;
+      border-radius: 4px; padding: 8px 14px;
+      font-size: 13px; color: #0a4a3a; margin-bottom: 12px;
+    }
+    .folder-badge span { font-weight: 600; }
+
+    .action-row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-top: 16px; }
+
+    .info-box {
+      background: #fffbe8; border-left: 3px solid #e8b800;
+      padding: 12px 16px; border-radius: 0 6px 6px 0;
+      font-size: 12px; color: #664f00; line-height: 1.8;
+      margin-top: 24px;
+    }
+    .info-box strong { font-weight: 700; }
+  </style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1>Gallery Upload</h1>
+  <p class="subtitle">Owner tool — adds photos to gallery automatically. Not linked from the site.</p>
+
+  <!-- STEP 1: Pick the gallery folder -->
+  <div class="step active" id="step1">
+    <div class="step-head">
+      <div class="step-num" id="num1">1</div>
+      <div class="step-title">Select your project folder</div>
+    </div>
+    <p class="step-desc">Point to the root of your website (PREEPIX-FINAL). Done once — browser remembers it.</p>
+    <button class="btn btn-primary" id="btnPickRoot">Choose project folder</button>
+    <div class="result" id="rootResult"></div>
+  </div>
+
+  <!-- STEP 2: Drop photos -->
+  <div class="step" id="step2">
+    <div class="step-head">
+      <div class="step-num" id="num2">2</div>
+      <div class="step-title">Drop your photos</div>
+    </div>
+    <p class="step-desc">Select one or more images — they'll be renamed and saved automatically.</p>
+    <div class="dropzone" id="dropzone">
+      <input type="file" id="fileInput" accept="image/jpeg,image/png,image/webp,image/gif" multiple>
+      <div class="dz-icon">📷</div>
+      <div class="dz-title">Drop photos here or click to browse</div>
+      <div class="dz-sub">JPG · PNG · WEBP · GIF &nbsp;·&nbsp; Multiple files OK</div>
+    </div>
+    <div class="preview-grid" id="previewGrid"></div>
+    <div class="action-row" id="actionRow" style="display:none">
+      <button class="btn btn-accent" id="btnSave">Save to gallery</button>
+      <button class="btn btn-ghost"  id="btnClear">Clear</button>
+    </div>
+    <div class="progress" id="progress">
+      <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+      <div class="progress-txt"  id="progressTxt">Saving…</div>
+    </div>
+    <div class="result" id="saveResult"></div>
+  </div>
+
+  <div class="info-box">
+    <strong>How it works:</strong><br>
+    • Browser asks permission to access your project folder (one-time)<br>
+    • Photos are renamed <code>khai-studio-001.jpg</code>, <code>002.jpg</code> … and saved into <code>images/albums/gal-2/</code><br>
+    • <code>gallery.html</code> is updated automatically — the new &lt;div&gt; blocks are injected<br>
+    • Refresh your Live Server tab — photos appear instantly<br>
+    • No terminal, no server, no copy-paste needed
+  </div>
+
+</div>
+
+<script>
+(function () {
+
+  /* ── State ── */
+  var rootHandle   = null;   // FileSystemDirectoryHandle for project root
+  var albumsHandle = null;   // FileSystemDirectoryHandle for images/albums/gal-2
+  var galleryHandle= null;   // FileSystemFileHandle for gallery.html
+  var pendingFiles = [];
+  var MARKER = '<!-- ADD MORE PHOTOS HERE -->';
+
+  /* ── Elements ── */
+  var step1       = document.getElementById('step1');
+  var step2       = document.getElementById('step2');
+  var btnPickRoot = document.getElementById('btnPickRoot');
+  var rootResult  = document.getElementById('rootResult');
+  var dropzone    = document.getElementById('dropzone');
+  var fileInput   = document.getElementById('fileInput');
+  var previewGrid = document.getElementById('previewGrid');
+  var actionRow   = document.getElementById('actionRow');
+  var btnSave     = document.getElementById('btnSave');
+  var btnClear    = document.getElementById('btnClear');
+  var progress    = document.getElementById('progress');
+  var progressFill= document.getElementById('progressFill');
+  var progressTxt = document.getElementById('progressTxt');
+  var saveResult  = document.getElementById('saveResult');
+
+  /* ── Check browser support ── */
+  if (!window.showDirectoryPicker) {
+    showMsg(rootResult, 'err',
+      '<strong>Browser not supported.</strong> Please use Chrome or Edge. ' +
+      'Firefox and Safari do not support folder access.');
+    btnPickRoot.disabled = true;
+  }
+
+  /* ══════════════════════════════════
+     STEP 1 — Pick project root folder
+  ══════════════════════════════════ */
+  btnPickRoot.addEventListener('click', async function () {
+    try {
+      rootHandle = await window.showDirectoryPicker({ mode: 'readwrite' });
+
+      /* Navigate to images/albums/gal-2 — create if missing */
+      var imagesDir = await rootHandle.getDirectoryHandle('images', { create: true });
+      var albumsDir = await imagesDir.getDirectoryHandle('albums', { create: true });
+      albumsHandle  = await albumsDir.getDirectoryHandle('gal-2',  { create: true });
+
+      /* Get gallery.html handle */
+      try {
+        galleryHandle = await rootHandle.getFileHandle('gallery.html', { create: false });
+      } catch (e) {
+        showMsg(rootResult, 'err',
+          '<strong>gallery.html not found</strong> in that folder. ' +
+          'Make sure you selected the correct project root (PREEPIX-FINAL).');
+        return;
+      }
+
+      showMsg(rootResult, 'ok',
+        '<strong>Folder connected!</strong> &nbsp;→&nbsp; ' +
+        '<code>' + rootHandle.name + '/images/albums/gal-2/</code>');
+
+      step1.classList.add('done');
+      step2.classList.add('active');
+
+    } catch (e) {
+      if (e.name !== 'AbortError') {
+        showMsg(rootResult, 'err', '<strong>Could not open folder:</strong> ' + e.message);
+      }
+    }
+  });
+
+  /* ══════════════════════════════════
+     STEP 2 — Drop / pick images
+  ══════════════════════════════════ */
+  dropzone.addEventListener('dragover',  function (e) { e.preventDefault(); dropzone.classList.add('drag-over'); });
+  dropzone.addEventListener('dragleave', function ()  { dropzone.classList.remove('drag-over'); });
+  dropzone.addEventListener('drop', function (e) {
+    e.preventDefault();
+    dropzone.classList.remove('drag-over');
+    addFiles(Array.from(e.dataTransfer.files));
+  });
+  fileInput.addEventListener('change', function () {
+    addFiles(Array.from(fileInput.files));
+    fileInput.value = '';
+  });
+
+  function addFiles(files) {
+    files.forEach(function (f) {
+      if (!f.type.startsWith('image/')) return;
+      pendingFiles.push(f);
+      addPreview(f, pendingFiles.length - 1);
+    });
+    if (pendingFiles.length) actionRow.style.display = 'flex';
+  }
+
+  function addPreview(file, idx) {
+    var reader = new FileReader();
+    reader.onload = function (e) {
+      var item = document.createElement('div');
+      item.className = 'pv-item';
+
+      var img       = document.createElement('img');
+      img.src       = e.target.result;
+
+      var label     = document.createElement('div');
+      label.className   = 'pv-label';
+      label.textContent = file.name;
+
+      var rm = document.createElement('button');
+      rm.className   = 'pv-rm';
+      rm.textContent = '×';
+      rm.addEventListener('click', function () {
+        pendingFiles.splice(idx, 1);
+        item.remove();
+        if (!pendingFiles.length) actionRow.style.display = 'none';
+      });
+
+      item.appendChild(img);
+      item.appendChild(label);
+      item.appendChild(rm);
+      previewGrid.appendChild(item);
+    };
+    reader.readAsDataURL(file);
+  }
+
+  /* ══════════════════════════════════
+     SAVE — write files + patch HTML
+  ══════════════════════════════════ */
+  btnSave.addEventListener('click', async function () {
+    if (!pendingFiles.length || !albumsHandle || !galleryHandle) return;
+
+    btnSave.disabled = true;
+    progress.style.display = 'block';
+    saveResult.style.display = 'none';
+
+    try {
+      /* Work out next sequential index */
+      var existingNums = [];
+      for await (var entry of albumsHandle.values()) {
+        var m = entry.name.match(/khai-studio-(\d+)\./);
+        if (m) existingNums.push(parseInt(m[1], 10));
+      }
+      var nextIdx = existingNums.length ? Math.max.apply(null, existingNums) + 1 : 1;
+
+      var savedNames = [];
+      var total = pendingFiles.length;
+
+      /* Save each image */
+      for (var i = 0; i < total; i++) {
+        var file = pendingFiles[i];
+        var ext  = file.name.split('.').pop().toLowerCase() || 'jpg';
+        var name = 'khai-studio-' + String(nextIdx).padStart(3, '0') + '.' + ext;
+
+        progressFill.style.width = Math.round(((i + 0.5) / total) * 70) + '%';
+        progressTxt.textContent  = 'Saving ' + name + '…';
+
+        /* Write file to images/albums/gal-2/ */
+        var newFile   = await albumsHandle.getFileHandle(name, { create: true });
+        var writable  = await newFile.createWritable();
+        await writable.write(file);
+        await writable.close();
+
+        savedNames.push(name);
+        nextIdx++;
+      }
+
+      /* Build the new <div> blocks */
+      progressFill.style.width = '80%';
+      progressTxt.textContent  = 'Updating gallery.html…';
+
+      var divBlocks = savedNames.map(function (name) {
+        var src = 'images/albums/gal-2/' + name;
+        return (
+          '\n            <div class="col-sm-6 col-lg-3 blog-item-masonry gallery-post">\n' +
+          '              <a href="' + src + '" class="lightbox" title="">\n' +
+          '                <img loading="lazy" decoding="async" class="img-fluid"\n' +
+          '                     src="' + src + '"\n' +
+          '                     alt="Khai Studio Photography \u2013 Surrey &amp; Metro Vancouver">\n' +
+          '              </a>\n' +
+          '            </div>'
+        );
+      }).join('');
+
+      /* Read gallery.html, inject blocks, write back */
+      var galleryFile = await galleryHandle.getFile();
+      var html        = await galleryFile.text();
+
+      if (html.indexOf(MARKER) === -1) {
+        throw new Error('Marker comment not found in gallery.html. Make sure it contains: ' + MARKER);
+      }
+
+      var updatedHtml = html.replace(
+        MARKER,
+        divBlocks + '\n\n            ' + MARKER
+      );
+
+      var galleryWritable = await galleryHandle.createWritable();
+      await galleryWritable.write(updatedHtml);
+      await galleryWritable.close();
+
+      progressFill.style.width = '100%';
+      progressTxt.textContent  = 'Done!';
+
+      setTimeout(function () {
+        progress.style.display = 'none';
+        progressFill.style.width = '0';
+        btnSave.disabled = false;
+
+        var listHtml = '<ul class="saved-list">' +
+          savedNames.map(function (n) { return '<li>' + n + '</li>'; }).join('') +
+          '</ul>';
+        showMsg(saveResult, 'ok',
+          '<strong>' + savedNames.length + ' photo' + (savedNames.length > 1 ? 's' : '') +
+          ' saved and gallery.html updated!</strong><br>' +
+          'Refresh your browser tab to see the changes.<br>' + listHtml
+        );
+
+        clearAll();
+      }, 500);
+
+    } catch (err) {
+      btnSave.disabled = false;
+      progress.style.display = 'none';
+      showMsg(saveResult, 'err', '<strong>Error:</strong> ' + err.message);
+    }
+  });
+
+  btnClear.addEventListener('click', clearAll);
+
+  function clearAll() {
+    pendingFiles = [];
+    previewGrid.innerHTML    = '';
+    actionRow.style.display  = 'none';
+  }
+
+  function showMsg(el, type, html) {
+    el.className     = 'result ' + type;
+    el.innerHTML     = html;
+    el.style.display = 'block';
+  }
+
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en-CA">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<title>Thank You | Khai Studio</title>
+	<meta name="description" content="Thank you for contacting Khai Studio. Pawan will be in touch within 24–48 hours.">
+	<meta name="robots" content="noindex, nofollow">
+
+	<link rel="preconnect" href="https://fonts.googleapis.com/">
+	<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,400;0,500;0,600;0,700;1,400;1,700&family=Open+Sans:ital,wght@0,400;0,600;0,700&display=swap" rel="stylesheet">
+
+	<link rel="stylesheet" href="css/bootstrap/css/bootstrap.css">
+	<link rel="stylesheet" href="css/fontawesome/css/all.css">
+	<link rel="stylesheet" href="js/owl-carousel/owl.carousel.css">
+	<link rel="stylesheet" href="style.css">
+
+	<link rel="icon" href="images/icons/favicon-32x32.png" sizes="32x32">
+	<link rel="icon" href="images/icons/favicon-192x192.png" sizes="192x192">
+	<link rel="apple-touch-icon-precomposed" href="images/icons/favicon-180x180.png">
+
+	<!-- GA4 + form-submission conversion event -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+		gtag('config', 'G-XXXXXXXXXX');
+		gtag('event', 'contact_form_submit', { 'event_category': 'engagement' });
+	</script>
+</head>
+
+<body>
+	<div id="header"></div>
+
+	<div class="page-holder custom-page-template page-full fullscreen-page clearfix">
+
+		<section class="section-holder thankyou-wrap">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-8 offset-lg-2">
+
+						<div class="thankyou-icon">
+							<i class="far fa-check-circle" aria-hidden="true"></i>
+						</div>
+
+						<span class="eyebrow">Message Received</span>
+						<h1 class="section-title margin-b32">Thank You!</h1>
+
+						<p style="font-size: 18px; margin-bottom: 16px;">
+							Your message has been received.
+						</p>
+
+						<p style="margin-bottom: 32px;">
+							I'll get back to you within 24–48 hours to discuss your session in detail.
+							In the meantime, feel free to follow along on Instagram for the latest work
+							or browse the portfolio.
+						</p>
+
+						<div class="thankyou-actions">
+							<a href="https://www.instagram.com/khaistudio.ca/" target="_blank" rel="noopener noreferrer" class="view-more">
+								<i class="fab fa-instagram" aria-hidden="true"></i> &nbsp; Follow @khaistudio.ca
+							</a>
+							<a href="gallery.html" class="view-more">View Portfolio</a>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</section>
+
+	</div>
+
+	<div id="footer"></div>
+
+	<script src="js/jquery.js"></script>
+	<script src="js/jquery-migrate.min.js"></script>
+	<script src="css/bootstrap/js/popper.js"></script>
+	<script src="css/bootstrap/js/bootstrap.js"></script>
+
+	<script>
+		document.addEventListener("DOMContentLoaded", function () {
+			fetch("partials/header.html")
+				.then(function (r) { return r.text(); })
+				.then(function (html) {
+					document.getElementById("header").innerHTML = html;
+					var s = document.createElement("script");
+					s.src = "js/init.js";
+					document.body.appendChild(s);
+				});
+			fetch("partials/footer.html")
+				.then(function (r) { return r.text(); })
+				.then(function (html) {
+					document.getElementById("footer").innerHTML = html;
+				});
+		});
+	</script>
+</body>
+
+</html>
