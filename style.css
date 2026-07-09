@@ -62,6 +62,7 @@
 	--headings-h4-size: 2rem;
 	--headings-h5-size: 1.5rem;
 	--headings-h6-size: 1rem;
+	--ribbon-background-color: #FAF8F2;
 }
 
 * {
@@ -1290,7 +1291,7 @@ aside > ul > li:first-child { margin-top: 0; }
 
 .widgettitle,
 .widgettitle2 h5 {
-	color: #151515;
+	color: #f9e0e0;
 	font-weight: 700;
 	font-size: 1.5rem;
 	letter-spacing: 0.03em;
@@ -1311,6 +1312,9 @@ footer {
 	margin-top: 108px;
 	padding: 0 0 54px 0;
 	background: var(--footer-background-color);
+}
+.bg-ribbon{
+	background: var(--ribbon-background-color);
 }
 
 .footer-widgets { padding-top: 108px; }

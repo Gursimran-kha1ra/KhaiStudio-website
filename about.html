@@ -65,6 +65,7 @@
 	<link rel="stylesheet" href="css/fontawesome/css/all.css">
 	<link rel="stylesheet" href="js/owl-carousel/owl.carousel.css">
 	<link rel="stylesheet" href="style.css">
+	<link rel="stylesheet" href="theme-v7.css?v=8">
 
 	<link rel="icon" href="images/icons/favicon-32x32.png" sizes="32x32">
 	<link rel="icon" href="images/icons/favicon-192x192.png" sizes="192x192">
@@ -81,10 +82,11 @@
 </head>
 
 <body>
+	<a class="skip-link" href="#main-content">Skip to content</a>
 	<div id="header"></div>
 
 	<!-- PAGE TOP -->
-	<div class="top-single-bkg" style="background-image:url('images/top-headers/top-about.jpg');">
+	<div class="top-single-bkg" style="background-image:url('images/pages/about-us.jpg');">
 		<div class="inner-desc">
 			<div class="container">
 				<h1 class="post-title single-post-title">About Khai Studio</h1>
@@ -94,7 +96,7 @@
 	</div>
 
 	<!-- PAGE CONTENT -->
-	<div class="page-holder custom-page-template page-full fullscreen-page clearfix">
+	<div class="page-holder custom-page-template page-full fullscreen-page clearfix" id="main-content" tabindex="-1">
 
 		<!-- INTRO — client's bio -->
 		<section class="section-holder margin-b72">
@@ -172,6 +174,16 @@
 		</section>
 
 		<!-- APPROACH -->
+		<!-- ══════════ IMAGE STRIP (separator) ══════════ -->
+		</div>
+		<section class="image-strip" aria-label="A glimpse of recent work">
+			<a class="image-strip__item" href="gallery.html"><img loading="lazy" decoding="async" src="images/albums/gal-2/khai-009-portrait.jpg" alt="Couples photography — Khai Studio"><span class="image-strip__cap">Couples</span></a>
+			<a class="image-strip__item" href="gallery.html"><img loading="lazy" decoding="async" src="images/albums/gal-2/khai-015-tall.jpg" alt="Wedding photography — Khai Studio"><span class="image-strip__cap">Weddings</span></a>
+			<a class="image-strip__item" href="gallery.html"><img loading="lazy" decoding="async" src="images/albums/gal-2/khai-029-portrait.jpg" alt="Elopement photography — Khai Studio"><span class="image-strip__cap">Elopements</span></a>
+			<a class="image-strip__item" href="gallery.html"><img loading="lazy" decoding="async" src="images/albums/gal-2/khai-041-tall.jpg" alt="Metro Vancouver photography — Khai Studio"><span class="image-strip__cap">Metro Vancouver</span></a>
+			<a class="image-strip__item" href="gallery.html"><img loading="lazy" decoding="async" src="images/albums/gal-2/khai-044-portrait.jpg" alt="Destination photography — Khai Studio"><span class="image-strip__cap">Destination</span></a>
+		</section>
+		<div class="page-holder">
 		<section class="section-holder alignc" style="padding: 80px 0;">
 			<div class="container">
 				<div class="row">
@@ -277,36 +289,8 @@
 
 	<div id="footer"></div>
 
-	<script src="js/jquery.js"></script>
-	<script src="js/jquery-migrate.min.js"></script>
-	<script src="css/bootstrap/js/popper.js"></script>
-	<script src="css/bootstrap/js/bootstrap.js"></script>
-	<script src="js/easing.js"></script>
-	<script src="js/fitvids.js"></script>
-	<script src="js/owl-carousel/owl.carousel.js"></script>
-	<script src="js/isotope.js"></script>
-	<script src="js/simple-lightbox.js"></script>
-
-	<script>
-		document.addEventListener("DOMContentLoaded", function () {
-			fetch("partials/header.html")
-				.then(function (r) { return r.text(); })
-				.then(function (html) {
-					document.getElementById("header").innerHTML = html;
-					var s = document.createElement("script");
-					s.src = "js/init.js";
-					document.body.appendChild(s);
-				});
-			fetch("partials/footer.html")
-				.then(function (r) { return r.text(); })
-				.then(function (html) {
-					document.getElementById("footer").innerHTML = html;
-				});
-		});
-	</script>
-
-	<script src="js/jquery.form.min.js"></script>
-	<script src="js/contactform.js"></script>
+	<!-- Single JS entry: loads vendors, partials, and all page logic -->
+	<script src="js/app.js?v=8"></script>
 </body>
 
 </html>

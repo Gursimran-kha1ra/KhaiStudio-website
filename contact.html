@@ -42,6 +42,7 @@
 	<link rel="stylesheet" href="css/fontawesome/css/all.css">
 	<link rel="stylesheet" href="js/owl-carousel/owl.carousel.css">
 	<link rel="stylesheet" href="style.css">
+	<link rel="stylesheet" href="theme-v7.css?v=8">
 
 	<link rel="icon" href="images/icons/favicon-32x32.png" sizes="32x32">
 	<link rel="icon" href="images/icons/favicon-192x192.png" sizes="192x192">
@@ -57,23 +58,13 @@
 	</script>
 </head>
 
-<body>
+<body class="no-top-image">
+	<a class="skip-link" href="#main-content">Skip to content</a>
 	<div id="header"></div>
 
-	<!-- PAGE TOP -->
-	<div class="top-single-bkg" style="background-image:url('images/top-headers/top-contact.jpg');">
-		<div class="inner-desc">
-			<div class="container">
-				<h1 class="post-title single-post-title">Get in Touch</h1>
-				<span class="post-subtitle page-subtitle">
-					Let's plan your shoot in Surrey or anywhere across Metro Vancouver
-				</span>
-			</div>
-		</div>
-	</div>
 
 	<!-- PAGE CONTENT -->
-	<div class="page-holder custom-page-template page-full fullscreen-page clearfix">
+	<div class="page-holder custom-page-template page-full fullscreen-page clearfix" id="main-content" tabindex="-1">
 
 		<!-- INTRO -->
 		<section class="section-holder alignc" style="padding: 70px 0 40px;">
@@ -81,12 +72,8 @@
 				<div class="row">
 					<div class="col-lg-8 offset-lg-2">
 						<span class="eyebrow">Reach Out</span>
-						<h2 class="section-title margin-b32">Let's Tell Your Story</h2>
-						<p>
-							Whether you have a specific package in mind or are still exploring,
-							I'd love to hear about your vision. Send a note below and I'll be in touch
-							within 24–48 hours.
-						</p>
+						<h2 class="section-title margin-b32" style="text-align:center;">Let's Begin</h2>
+						
 					</div>
 				</div>
 			</div>
@@ -176,68 +163,18 @@
 						</div>
 					</div>
 
-					<!-- CONTACT DETAILS -->
+					<!-- OUR PROCESS (beside the form) -->
 					<div class="col-lg-5">
-						<div class="margin-l54">
-
-							<span class="eyebrow eyebrow-left">Other Ways to Reach Out</span>
-							<h2 class="section-title margin-b32">Let's Plan Your Session</h2>
-
-							<div class="icon-box-3-wrapper margin-b32">
-								<div class="icon-box-3-icon">
-									<div class="icon-box-3-inner">
-										<i class="far fa-envelope" aria-hidden="true"></i>
-									</div>
-								</div>
-								<div class="icon-box-3-content">
-									<h3 class="box-title box-title-3">Email</h3>
-									<p>
-										<a href="mailto:info@khaistudio.ca">info@khaistudio.ca</a>
-									</p>
-								</div>
-							</div>
-
-							<div class="icon-box-3-wrapper margin-b32">
-								<div class="icon-box-3-icon">
-									<div class="icon-box-3-inner">
-										<i class="fab fa-instagram" aria-hidden="true"></i>
-									</div>
-								</div>
-								<div class="icon-box-3-content">
-									<h3 class="box-title box-title-3">Instagram</h3>
-									<p>
-										<a href="https://www.instagram.com/khaistudio.ca/" target="_blank" rel="noopener noreferrer">
-											@khaistudio.ca
-										</a>
-									</p>
-								</div>
-							</div>
-
-							<div class="icon-box-3-wrapper margin-b32">
-								<div class="icon-box-3-icon">
-									<div class="icon-box-3-inner">
-										<i class="fas fa-map-marker-alt" aria-hidden="true"></i>
-									</div>
-								</div>
-								<div class="icon-box-3-content">
-									<h3 class="box-title box-title-3">Location</h3>
-									<p>Sunshine Hill, Surrey, BC</p>
-									<p>Serving all of Metro Vancouver — and available for destination work.</p>
-								</div>
-							</div>
-
-							<div class="icon-box-3-wrapper">
-								<div class="icon-box-3-icon">
-									<div class="icon-box-3-inner">
-										<i class="far fa-clock" aria-hidden="true"></i>
-									</div>
-								</div>
-								<div class="icon-box-3-content">
-									<h3 class="box-title box-title-3">Response Time</h3>
-									<p>I'll get back to you within 24–48 hours.</p>
-								</div>
-							</div>
-
+						<div class="margin-l54 contact-process">
+							<span class="eyebrow eyebrow-left">How It Works</span>
+							<h2 class="section-title margin-b32">Our Process</h2>
+							<ol class="process-steps">
+								<li><h3>Reach Out</h3><p>Send an enquiry with your date, location, and a little about your story.</p></li>
+								<li><h3>Consultation</h3><p>We connect to talk through your vision, locations, and the details that matter most.</p></li>
+								<li><h3>Reserve Your Date</h3><p>A signed agreement and deposit lock in your session.</p></li>
+								<li><h3>The Session</h3><p>Relaxed, natural direction on the day — you simply enjoy the moment.</p></li>
+								<li><h3>Your Gallery</h3><p>Receive a beautifully edited gallery to keep and share forever.</p></li>
+							</ol>
 						</div>
 					</div>
 
@@ -247,71 +184,12 @@
 
 	</div>
 
-	<!-- MAP — Surrey, BC -->
-	<section>
-		<div class="gmaps">
-			<iframe
-				src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d83327.37148313464!2d-122.90139!3d49.10442!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x5485d9a7a9e99021%3A0x84e51d3756fe4c1!2sSurrey%2C%20BC!5e0!3m2!1sen!2sca!4v1700000000000!5m2!1sen!2sca"
-				width="100%" height="450" style="border:0;"
-				allowfullscreen=""
-				loading="lazy"
-				referrerpolicy="no-referrer-when-downgrade"
-				title="Khai Studio location — Surrey, BC, serving Metro Vancouver">
-			</iframe>
-		</div>
-	</section>
+	
 
 	<div id="footer"></div>
 
-	<script src="js/jquery.js"></script>
-	<script src="js/jquery-migrate.min.js"></script>
-	<script src="css/bootstrap/js/popper.js"></script>
-	<script src="css/bootstrap/js/bootstrap.js"></script>
-	<script src="js/easing.js"></script>
-	<script src="js/fitvids.js"></script>
-	<script src="js/owl-carousel/owl.carousel.js"></script>
-	<script src="js/isotope.js"></script>
-	<script src="js/simple-lightbox.js"></script>
-
-	<script>
-		document.addEventListener("DOMContentLoaded", function () {
-
-			// Load header partial
-			fetch("partials/header.html")
-				.then(function (r) { return r.text(); })
-				.then(function (html) {
-					document.getElementById("header").innerHTML = html;
-					var s = document.createElement("script");
-					s.src = "js/init.js";
-					document.body.appendChild(s);
-				});
-
-			// Load footer partial
-			fetch("partials/footer.html")
-				.then(function (r) { return r.text(); })
-				.then(function (html) {
-					document.getElementById("footer").innerHTML = html;
-				});
-
-			// Pre-select package from URL query (?package=The+Spark etc.)
-			var params = new URLSearchParams(window.location.search);
-			var pkg = params.get("package");
-			if (pkg) {
-				var select = document.getElementById("package-select");
-				if (select) {
-					for (var i = 0; i < select.options.length; i++) {
-						if (select.options[i].value === pkg) {
-							select.selectedIndex = i;
-							break;
-						}
-					}
-				}
-			}
-		});
-	</script>
-
-	<script src="js/jquery.form.min.js"></script>
-	<script src="js/contactform.js"></script>
+	<!-- Single JS entry: loads vendors, partials, and all page logic -->
+	<script src="js/app.js?v=8"></script>
 </body>
 
 </html>
