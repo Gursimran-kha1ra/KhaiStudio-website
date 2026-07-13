@@ -47,7 +47,7 @@ a:hover{color:var(--brown-dark);}
 .eyebrow-on-dark{color:#F3ECDF;opacity:.92;}
 
 /* generous, consistent section rhythm */
-.section-holder{padding-top:96px;padding-bottom:96px;}
+.section-holder{padding-top:initial;padding-bottom:96px;}
 .section-title{margin-bottom:20px;}
 .page-holder p{max-width:64ch;}
 .alignc .page-holder p,.section-holder.alignc p{margin-left:auto;margin-right:auto;}
